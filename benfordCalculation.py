@@ -14,11 +14,10 @@ EXPECTED_PERCENTAGE = {
 }
 
 
-original_data=pd.read_csv("test.csv")
-#data=pd.read_csv('test.csv')
+original_data=pd.read_csv("AAPL.csv")
 
 #Taking 'Volume' column for testing benford law
-data=original_data['data']
+data=original_data['Volume']
 
 
 #Storing 1st digits of all volume value
@@ -69,5 +68,5 @@ f = None
 if chi_square_sum < 15.51:
     f = frequency
 else:
-    f="Donot follow Benford Law"
+    f="Your input dataset doesn't follow Benford's Law"
 
