@@ -32,8 +32,8 @@ set(leading_digit_list)
 
 
 #As first digit cannot be '0', Removing
-#while '0' in leading_digit_list:
- #   leading_digit_list.remove('0')
+while '0' in leading_digit_list:
+    leading_digit_list.remove('0')
 leading_digit_list.sort()
 
 
