@@ -13,11 +13,12 @@ EXPECTED_PERCENTAGE = {
     "9": 0.046
 }
 
-#original_data=pd.read_csv("AAPL.csv")
-data=pd.read_csv('test.csv')
+
+original_data=pd.read_csv("test.csv")
+#data=pd.read_csv('test.csv')
 
 #Taking 'Volume' column for testing benford law
-data=data['data']
+data=original_data['data']
 
 
 #Storing 1st digits of all volume value
@@ -45,27 +46,28 @@ for num in EXPECTED_PERCENTAGE:
     expected_frequency[num] = EXPECTED_PERCENTAGE[num] * total_digits
 
 #Calculating the frequency of each digit occured
-frequency={}
+observed_frequency={}
 for i in leading_digit_list:
-    if i in frequency.keys():
-        frequency[i]+=1
+    if i in observed_frequency.keys():
+        observed_frequency[i]+=1
     else:
-        frequency[i]=1
+        observed_frequency[i]=1
 
 
 #Normalizing
-for i in frequency:
-   frequency[i]=frequency[i]/total_digits*100
+frequency = {}
+for i in observed_frequency:
+   frequency[i] = observed_frequency[i]/total_digits*100
 
 #chi square test
 chi_square_sum = 0
 for i in range(1, 10):
-    chi_square = math.pow(frequency[str(i)] - expected_frequency[str(i)], 2)/total_digits
-    chi_square_sum += chi_square
+    chi_square = math.pow(observed_frequency[str(i)] - expected_frequency[str(i)], 2)
+    chi_square_sum += chi_square/expected_frequency[str(i)]
 
 f = None
 if chi_square_sum < 15.51:
-    f=frequency
+    f = frequency
 else:
     f="Donot follow Benford Law"
 
